@@ -30,7 +30,7 @@ def print_tweets(db):
 
 
 def save_tweets(db):
-    with open('musk-tweets-1.txt') as f:
+    with open('../data/musk-tweets-1.txt') as f:
         print('Saving tweets...')
         for line in f:
             tweet = json.loads(line)
