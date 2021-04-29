@@ -12,6 +12,7 @@ def list_blobs(bucket_name):
     for blob in blobs:
         print(blob.name)
 
+
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
     """Uploads a file to the bucket."""
     # The ID of your GCS bucket
@@ -35,10 +36,14 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     )
 
 
-if __name__ == "__main__":
-    file_name = "yob2019.avro"
-    bucket = "new-bucket-7913"
-    src_file = os.path.join("data", file_name)
-    upload_blob(bucket, src_file, file_name)
-    # list_blobs(bucket)
+def upload_dir(bucket_name, src_dir_name):
+    for file_name in os.listdir(src_dir_name):
+        src_path = f"{src_dir_name}/{file_name}"
+        print(src_path)
+        upload_blob(bucket_name, src_path, file_name)
 
+
+if __name__ == "__main__":
+    bucket_name = "yob-7913"
+    src_dir = "../staging"
+    upload_dir(bucket_name, src_dir)

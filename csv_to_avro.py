@@ -11,7 +11,7 @@ def write_avro(file_in, file_out, schema_path):
         for line in f_in:
             line = line.split(",")
             print("CSV LINE: ", line)
-            writer.append({"name": line[0], "sex": line[1], "count": int(line[2])})
+            writer.append({"name": line[0], "sex": line[1], "count": int(line[2]), "year": int(line[3])})
     writer.close()
 
 def read_avro(file_out):
@@ -21,8 +21,8 @@ def read_avro(file_out):
     reader.close()
 
 if __name__ == "__main__":
-    file_in = os.path.join("data", "yob2019.txt")
-    file_out = os.path.join("data", "yob2019.avro")
+    file_in = os.path.join("data", "yob2017.txt")
+    file_out = os.path.join("data", "yob2017.avro")
     schema_path = os.path.join("data", "yob.avsc")
-    # write_avro(file_in, file_out, schema_path)
+    write_avro(file_in, file_out, schema_path)
     read_avro(file_out)
