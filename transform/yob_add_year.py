@@ -5,8 +5,8 @@
 import glob
 
 if __name__ == "__main__":
-    data_dir = "data/"
-    staging_dir = "staging/"
+    data_dir = "../data/names_without_year/"
+    staging_dir = "../data/names/"
 
     for yob_f in glob.glob(data_dir + "yob*.txt"):
         year = yob_f .split(".")[0][-4:]

@@ -36,14 +36,14 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     )
 
 
-def upload_dir(bucket_name, src_dir_name):
+def upload_dir(src_dir_name, target_bucket_name):
     for file_name in os.listdir(src_dir_name):
         src_path = f"{src_dir_name}/{file_name}"
         print(src_path)
-        upload_blob(bucket_name, src_path, file_name)
+        upload_blob(target_bucket_name, src_path, file_name)
 
 
 if __name__ == "__main__":
     bucket_name = "yob-7913"
     src_dir = "../staging"
-    upload_dir(bucket_name, src_dir)
+    upload_dir(src_dir, bucket_name)

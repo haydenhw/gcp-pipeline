@@ -21,8 +21,8 @@ def read_avro(file_out):
     reader.close()
 
 if __name__ == "__main__":
-    file_in = os.path.join("data", "yob2017.txt")
-    file_out = os.path.join("data", "yob2017.avro")
+    file_in = os.path.join("data", "names", "yob2016.txt")
+    file_out = os.path.join("data", "names", "yob2016.avro")
     schema_path = os.path.join("data", "yob.avsc")
     write_avro(file_in, file_out, schema_path)
     read_avro(file_out)
