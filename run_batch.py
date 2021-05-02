@@ -4,6 +4,9 @@ from transform.csv_to_avro import write_avro, read_avro
 from gcs.gcs_load import upload_dir
 from bq.bq_load_avro import load_avro
 from gcs.gcs_archive import archive_blobs
+from services.names import get_connection, list_names_by_year
+from services.extraction_logger import get_last_year_processed, log_current_year
+
 
 def find_most_recent_year():
     data_dir = os.path.join("data", "names")
@@ -12,20 +15,28 @@ def find_most_recent_year():
     year = last_file.split(".")[0][-4:]
     return year
 
+
+
+
 def run_names_job():
+    pg_con = get_connection()
     staging_bucket = "yob-7913"
     staging_dir = "staging"
-    year = find_most_recent_year()
 
-    file_in = os.path.join("data", "names", f"yob{year}.txt")
+    # read names from DB
+    # log having done so
+    year = int(get_last_year_processed()) + 1
+    names = list_names_by_year(pg_con, year)
+    log_current_year(year)
+
+    # convert result set to an avro file
     file_out = os.path.join("staging", f"yob{year}.avro")
     write_avro(
-        file_in,
+        names,
         file_out,
         schema_path=os.path.join("data", "yob.avsc")
     )
     read_avro(file_out)
-    os.remove(file_in)
 
     # upload files into GCS
     upload_dir(staging_dir, staging_bucket)
@@ -43,5 +54,6 @@ def run_names_job():
 
     sys.exit(0)
 
+
 if __name__ == "__main__":
-  run_names_job()
+    run_names_job()
