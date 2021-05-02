@@ -27,4 +27,7 @@ requests==2.25.1
 rsa==4.7.2
 six==1.15.0
 urllib3==1.26.4
+<<<<<<< HEAD
 
+=======
+>>>>>>> 73cbf48... fix for add year column transformation

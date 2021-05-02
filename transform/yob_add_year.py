@@ -9,12 +9,15 @@ if __name__ == "__main__":
     staging_dir = "../data/names/"
 
     for yob_f in glob.glob(data_dir + "yob*.txt"):
-        year = yob_f .split(".")[0][-4:]
+        year = yob_f[-8:-4]
+        print(year)
+
+
         with open(yob_f) as f:
             with open(f"{staging_dir}yob{year}.txt", "w") as f_out:
                 for line in f:
                     updated_line = f"{line.strip()},{year}\n"
-                    print(updated_line)
+                    #print(updated_line)
                     f_out.write(updated_line)
 
 
