@@ -4,9 +4,10 @@ from transform.csv_to_avro import write_avro, read_avro
 from gcs.gcs_load import upload_dir
 from bq.bq_load_avro import load_avro
 from gcs.gcs_archive import archive_blobs
-from services.names import get_connection, list_names_by_year
+from util.db import get_connection
+from services.names import  list_names_by_year
 from services.extraction_logger import get_last_year_processed, log_current_year
-
+from services import crypto
 
 def find_most_recent_year():
     data_dir = os.path.join("data", "names")
@@ -18,8 +19,7 @@ def find_most_recent_year():
 
 
 
-def run_names_job():
-    pg_con = get_connection()
+def run_names_job(pg_con):
     staging_bucket = "yob-7913"
     staging_dir = "staging"
 
@@ -56,4 +56,4 @@ def run_names_job():
 
 
 if __name__ == "__main__":
-    run_names_job()
+    run_names_job(pg_con)
